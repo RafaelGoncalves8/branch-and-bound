@@ -4,6 +4,7 @@ lb = [];
 ub = [];
 Aeq = [];
 Beq = [];
+points = [];
 
 % Inputs
 f = input("Enter the coefficients of the function to minimize in\
