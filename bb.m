@@ -2,22 +2,28 @@
 function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
 
     global num_variables;
-
-    [X, v] = linprog(f, A, B, Aeq, Beq, lb, ub);
     flag_int = 1;
 
-    for i =  0:num_variables
+    try
+        [X, v] = linprog(f, A, B, Aeq, Beq, lb, ub);
+    catch
+        v = NA;
+    end
+
+    for i =  1:num_variables
         % If not integer
-        if (!~mod(X(i,1),1))
+        if ((!isnan(v)) && (!~mod(X(i),1)))
             flag_int = 0;
-            var_val = floor(X(i,1));
+            var_val = floor(X(i));
             var_index = i;
         endif;
     endfor;
 
+    disp(flag_int);
+
     % If all elements integer
     if (flag_int == 1)
-        if (v == NA)
+        if (isnan(v))
             ret1 = NA;
             ret2 = 1;
             ret3 = inf;
@@ -29,17 +35,22 @@ function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
             update_graph(X);
         endif
     else
+        printf("I am not an integer: ");
         lb1 = lb;
         lb2 = lb;
         ub1 = ub;
         ub2 = ub;
 
-        lb1(var_index,1) = var_val+1;
+        lb1(var_index) = var_val+1;
 
-        ub2(var_index,1) = var_val;
+        ub2(var_index) = var_val;
+
+        printf("varval")
 
         [X1, i1, v1] = bb(f, A, B, Aeq, Beq, lb1, ub1);
         [X2, i2, v2] = bb(f, A, B, Aeq, Beq, lb2, ub2);
+
+        printf("passed almost all")
 
         if (v1 < v2)
             ret1 = X1;

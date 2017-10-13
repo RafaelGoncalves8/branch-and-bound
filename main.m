@@ -18,7 +18,7 @@ assert (rows(f) == columns(A));
 assert (rows(A) == rows(B));
 
 % Number of variables = number of coefficients in f
-num_variables = numel(f);
+global num_variables = numel(f);
 
 % Assume all variables >= 0
 lb = zeros(num_variables, 1);
