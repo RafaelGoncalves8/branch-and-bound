@@ -23,12 +23,15 @@ num_variables = numel(f);
 lb = zeros(num_variables, 1);
 ub = inf*ones(num_variables, 1);
 
+% Main function, calculates the minimum solution made of integers
 function retval = bb(f, A, B, Aeq, Beq, lb, ub)
 
     global num_variables;
 
     [v, X] = linprog(f, A, B, Aeq, Beq, lb, ub);
     flag_int = 1;
+
+    % print("calculated first simplex")
 
     for i =  0:num_variables
         if mod(X(i,0),1)
@@ -37,6 +40,7 @@ function retval = bb(f, A, B, Aeq, Beq, lb, ub)
             var_index = i;
         endif;
     endfor;
+    % print("calculated variables as int or not")
 
     if flag_int
         retval = [v, X];
@@ -50,10 +54,13 @@ function retval = bb(f, A, B, Aeq, Beq, lb, ub)
 
         ub2(var_index,0) = var_val;
 
+        % print("about to calculate simplex")
+
         [v1, X1] = bb(f, A, B, Aeq, Beq, lb1, ub1);
         [v2, X2] = bb(f, A, B, Aeq, Beq, lb2, ub2);
 
-        if v1 < v2
+        % print("calculated simplexes")
+        if (v1 < v2)
             retval = [v1, X1];
         endif;
 
@@ -61,5 +68,6 @@ function retval = bb(f, A, B, Aeq, Beq, lb, ub)
     endif;
 endfunction;
 
+% Call to the function Branch&Bound
 [v, X] = bb(f, A, B, Aeq, Beq, lb, ub)
 
