@@ -4,11 +4,7 @@ function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
     global num_variables;
     flag_int = 1;
 
-    try
-        [X, v] = linprog(f, A, B, Aeq, Beq, lb, ub);
-    catch
-        v = NA;
-    end
+    [X, v] = linprog(f, A, B, Aeq, Beq, lb, ub);
 
     for i =  1:num_variables
         % If not integer
