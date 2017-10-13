@@ -1,12 +1,10 @@
 % Main function, calculates the minimum solution made of integers
-function retval = bb(f, A, B, Aeq, Beq, lb, ub)
+function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
 
     global num_variables;
 
-    [v, X] = linprog(f, A, B, Aeq, Beq, lb, ub);
+    [X, v] = linprog(f, A, B, Aeq, Beq, lb, ub);
     flag_int = 1;
-
-    % print("calculated first simplex")
 
     for i =  0:num_variables
         if mod(X(i,0),1)
@@ -15,10 +13,11 @@ function retval = bb(f, A, B, Aeq, Beq, lb, ub)
             var_index = i;
         endif;
     endfor;
-    % print("calculated variables as int or not")
 
     if flag_int
-        retval = [v, X];
+        ret1 = X;
+        ret2 = 1;
+        ret3 = v;
     else
         lb1 = lb;
         lb2 = lb;
@@ -29,17 +28,19 @@ function retval = bb(f, A, B, Aeq, Beq, lb, ub)
 
         ub2(var_index,0) = var_val;
 
-        % print("about to calculate simplex")
+        [X1, i1, v1] = bb(f, A, B, Aeq, Beq, lb1, ub1);
+        [X2, i2, v2] = bb(f, A, B, Aeq, Beq, lb2, ub2);
 
-        [v1, X1] = bb(f, A, B, Aeq, Beq, lb1, ub1);
-        [v2, X2] = bb(f, A, B, Aeq, Beq, lb2, ub2);
-
-        % print("calculated simplexes")
         if (v1 < v2)
-            retval = [v1, X1];
+            ret1 = X1;
+            ret2 = i1+i2;
+            ret3 = v1;
+        else
+            ret1 = X2;
+            ret2 = i1+i2;
+            ret3 = v2;
         endif;
-
-        retval = [v2, X2];
     endif;
+    return;
 endfunction;
 

@@ -7,11 +7,11 @@ Beq = [];
 
 % Inputs
 f = input("Enter the coefficients of the function to minimize in\
- the form of a column vector: ")
+ the form of a column vector:\n")
 A = input("Enter the coefficients of the right hand side of the\
- constraints in the form of an array with one constraint per line: ")
+ constraints in the form of an array with one constraint per line:\n")
 B = input("Enter the left hand side of the constraints in the form of\
- a column vector: ")
+ a column vector:\n")
 
 assert (rows(f) == columns(A));
 assert (rows(A) == rows(B));
@@ -24,5 +24,12 @@ lb = zeros(num_variables, 1);
 ub = inf*ones(num_variables, 1);
 
 % Call to the function Branch&Bound
-[v, X] = bb(f, A, B, Aeq, Beq, lb, ub)
+[X, i, v] = bb(f, A, B, Aeq, Beq, lb, ub);
+
+printf("Variables values:\n")
+disp(X)
+printf("Iterations: ")
+disp(i)
+printf("Value of the optimal solution: ")
+disp(v)
 
