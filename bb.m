@@ -29,7 +29,6 @@ function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
             update_graph(X, A, B, v);
         endif
     else
-        printf("I am not an integer: ");
         lb1 = lb;
         lb2 = lb;
         ub1 = ub;
