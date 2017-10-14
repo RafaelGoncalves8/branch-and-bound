@@ -1,4 +1,5 @@
 pkg load optim
+pkg load symbolic
 
 lb = [];
 ub = [];

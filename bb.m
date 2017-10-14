@@ -15,8 +15,6 @@ function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
         endif;
     endfor;
 
-    disp(flag_int);
-
     % If all elements integer
     if (flag_int == 1)
         if (isnan(v))
@@ -28,7 +26,7 @@ function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
             ret2 = 1;
             ret3 = v;
 
-            update_graph(X);
+            update_graph(X, A, B, v);
         endif
     else
         printf("I am not an integer: ");
@@ -38,15 +36,10 @@ function [ret1, ret2, ret3] = bb(f, A, B, Aeq, Beq, lb, ub)
         ub2 = ub;
 
         lb1(var_index) = var_val+1;
-
         ub2(var_index) = var_val;
-
-        printf("varval")
 
         [X1, i1, v1] = bb(f, A, B, Aeq, Beq, lb1, ub1);
         [X2, i2, v2] = bb(f, A, B, Aeq, Beq, lb2, ub2);
-
-        printf("passed almost all")
 
         if (v1 < v2)
             ret1 = X1;
