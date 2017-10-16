@@ -1,5 +1,4 @@
 pkg load optim
-pkg load specfun
 
 lb = [];
 ub = [];
