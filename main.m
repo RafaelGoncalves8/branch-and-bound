@@ -9,9 +9,9 @@ points = [];
 % Inputs
 f = input("Enter the coefficients of the function to minimize in\
  the form of a column vector:\n")
-A = input("Enter the coefficients of the right hand side of the\
+A = input("Enter the coefficients of the left hand side of the\
  constraints in the form of an array with one constraint per line:\n")
-B = input("Enter the left hand side of the constraints in the form of\
+B = input("Enter the right hand side of the constraints in the form of\
  a column vector:\n")
 
 assert (rows(f) == columns(A));

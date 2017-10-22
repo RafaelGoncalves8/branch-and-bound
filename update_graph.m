@@ -17,7 +17,7 @@ function update_graph(X, A, B, v)
             endif
             % constraint doesnt intercept x axis
             if (A(i,1) == 0)
-                Y_lim = [X_lim;0]
+                Y_lim = [X_lim;0];
             else
                 X_lim = [X_lim;B(i)/A(i,1)];
             endif
