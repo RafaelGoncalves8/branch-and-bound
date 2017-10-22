@@ -15,7 +15,7 @@ Exemple file archive:
 The only dependency is the package optim used for solving linear programming problems.
 
 ## Example
-`octave main.m < test2.m`
+`octave main.m < tests/test2.m`
 ```
 Enter the coefficients of the function to minimize in the form of a column vector:
 f =
